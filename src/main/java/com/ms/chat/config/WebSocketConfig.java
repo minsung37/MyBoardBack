@@ -11,17 +11,18 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    // 엔드포인트를 등록하기 위해 registerStompEndpoints method를 overide 한다.
+    // 엔드포인트 등록, CORS 설정
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws")
-                .setAllowedOrigins("*");
+        registry.addEndpoint("/ws").setAllowedOrigins("*");
     }
 
     // Message broker를 설정
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
+        // 클라이언트기준 메세지를 받을 때, 경로를 설정
         registry.enableSimpleBroker("/sub");
+        // 클라이언트기준 메시지 보낼때 경로 설정
         registry.setApplicationDestinationPrefixes("/pub");
     }
 
